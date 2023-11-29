@@ -24,11 +24,13 @@ int *Particao(int *A, int p, int r){
         }
     }
     x = j;
-    for(j = i+1; j < x -1; j++){
+    j = i+1;
+    for(k; k < r+1; k++){
         temp = A[j];
         A[j] = A[k];
         A[k] = temp;
         k++;
+        j++;
     }
     j = x;
    
