@@ -1,6 +1,6 @@
-#include "kmp.h"
-
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 
@@ -51,3 +51,46 @@ int kmp(char *string, char *padrao, int strTamanho, int padrao_tamanho){
 
 
 
+int main(){
+    FILE *padroes, *baseDados;
+    // Abertura de arquivos
+    padroes = fopen("PadroesVirus.txt", "r");
+    if(padroes == NULL){
+        printf("Erro, arquivo PadroesVirus nao pode ser aberto!");
+        system("pause");
+        exit(1);
+    }
+    baseDados = fopen("BaseDadosDNA.txt", "r");
+    if(baseDados == NULL){
+        printf("Erro, arquivo BaseDadosDNA nao pode ser aberto!");
+        system("pause");
+        exit(1);
+    }
+    //Lógica de percorrer o arquivo de padroes
+    char padrao[71];
+    int linhaVariante = 1;
+    char linha[71];
+    do{
+        fgets(padrao, 70, padroes);
+        
+        if(linhaVariante == 1){ //Essa linha refere-se a uma variante
+            
+            printf("%s", padrao + 1);
+        }
+
+
+        // Mostrar o resultado da variante atual
+
+        break;
+    }while(padrao[1] != 'E');
+
+    
+
+
+    int x;
+    // x = kmp(string, padrao, 10, 4);
+
+    return 0;
+}
+
+// A cada iteração o sistema percorre com a variante todos os dna e printa o que é preciso na tela
