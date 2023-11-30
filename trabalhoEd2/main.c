@@ -70,6 +70,7 @@ int main(){
     char padrao[71];
     int linhaVariante = 1;
     char linha[71];
+    
     do{
         fgets(padrao, 70, padroes);
         
