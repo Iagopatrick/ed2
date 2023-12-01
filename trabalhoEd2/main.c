@@ -1,52 +1,9 @@
+// Grupo 15, Iago Patrick de Melo Gripp Vilas Boas e Victor Henrique Rodrigues
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
-
-
-int kmp(char *string, char *padrao, int strTamanho, int padrao_tamanho){
-    int prefixo[4] = {0, 0, 0, 0};
-    int respostas[4] = {0, 0, 0, 0};
-    int j = -1;
-    int flag = 0, r = -1;
-    for(int i = 0; i < padrao_tamanho; i++){
-        if(padrao[j] == padrao[i]){
-            j++;
-            prefixo[j] = j;
-        }else if(padrao[j] != padrao[i] && j > 0){
-            j--;
-            prefixo[j] = j;
-            i--;
-        }
-    }
-
-    for(int i = 0; i < 4; i++){
-        printf("posicao: %d, valor: %d\n", i, prefixo[i]);
-    }
-    j = 0;
-    for(int i = 0; i < strTamanho; i++){
-        printf("Letra da string: %c", string[i]);
-        if(string[i] == padrao[j] && padrao_tamanho >= j){
-            printf("Achei uma posicao: %d\n", j);
-            printf("letra do padrao, letra comparada %c, %c\n", padrao[j], string[i]);
-            j++;
-            if(j == padrao_tamanho - 1){
-                printf("\n\ni:%d\n\n", i);
-                respostas[0] = i + 1 - j;
-            }
-
-        }else if(string[i] != padrao[j] && j > 0){
-            printf("Devo voltar para: %d\n", prefixo[j]);
-            j = prefixo[j];
-            flag = 0;
-        }
-        
-        printf("valor de i: %d\n", i);
-    }
-        printf("\nsua string ta aqui: %d\n", respostas[0]);
-    return j;
-}
+#include "kmp.h"
 
 
 
@@ -70,13 +27,22 @@ int main(){
     char padrao[71];
     int linhaVariante = 1;
     char linha[71];
+    // char padrao[8] = "ABCDABCA";
+
     
     do{
         fgets(padrao, 70, padroes);
         
         if(linhaVariante == 1){ //Essa linha refere-se a uma variante
+            fgets(linha, 70, baseDados);
+            fgets(linha, 70, baseDados);
+            fgets(padrao, 70, padroes);
+            // padrao = "ABCDABCA";
             
-            printf("%s", padrao + 1);
+            printf("%s", padrao);
+            printf("%s", linha);
+            
+            kmp(linha, padrao);
         }
 
 
