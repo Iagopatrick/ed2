@@ -13,7 +13,7 @@ int *funcaoPrefixo(char *padrao){
     prefixo = (int *) malloc(sizeof(int)*tamanhoPadrao);
     prefixo[0] = -1;
 
-    for(int q = 0; q < tamanhoPadrao; q++){
+    for(int q = 1; q < tamanhoPadrao; q++){
         while(k > -1 && padrao[k+1] != padrao[q]){
             k = prefixo[k];
         }
@@ -21,7 +21,7 @@ int *funcaoPrefixo(char *padrao){
             k++;
         }
         prefixo[q] = k;
-        printf("%d ", prefixo[q]);
+        
     }
 
     return prefixo;
@@ -29,7 +29,8 @@ int *funcaoPrefixo(char *padrao){
 
 
 
-int  kmp(char dnaAminal[71], char dnaVirus[4]){
+void  kmp(char *dnaAminal, char *dnaVirus){
+    
     int q = -1, m, n; //q-> indice no vetor de prefixo, m -> tamanho do dna do virus, n -> tamanho do dna do animal
     int *prefixo;
     int qntdIndices = 0; //indice correspondente das respostas na linha analisada
@@ -45,23 +46,25 @@ int  kmp(char dnaAminal[71], char dnaVirus[4]){
         if(dnaVirus[q+1] == dnaAminal[i]){
             q++;
         }
-        if(q == m){
+        if(q == m-1){
             
-            printf("Esta localizado em %d\n", i-m);
             q = prefixo[q];
             qntdIndices++;
         }
 
     }
-    return qntdIndices;
+    // return qntdIndices;
 }
 
 
 
 int main(){
-    int r;
-
-    r = kmp("GGTACCTCCTACGGGAGGCAGCAGTGAGGAATTTTCCGCAATGGGCGAAAGCCTGACGGAGCAATACCGC", "AGGA");
+    int *r;
+    printf("Oi porra\n");
+    
+    r = funcaoPrefixo("AGGA");
+    // printf("%d", r[0]);
+    kmp("GGTACCTCCTACGGGAGGCAGCAGTGAGGAATTTTCCGCAATGGGCGAAAGCCTGACGGAGCAATACCGC", "AGGA");
     return 0;
 }
 

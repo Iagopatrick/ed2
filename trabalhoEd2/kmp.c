@@ -35,10 +35,11 @@ int *alocaVetor(int tamanho){
 int *funcaoPrefixo(char *padrao){
     int tamanhoPadrao = strlen(padrao);
     int *prefixo, k = -1;
+    // prefixo = alocaVetor(tamanhoPadrao);
     prefixo = alocaVetor(tamanhoPadrao);
     prefixo[0] = -1;
 
-    for(int q = 0; q < tamanhoPadrao; q++){
+    for(int q = 1; q < tamanhoPadrao; q++){
         while(k > -1 && padrao[k+1] != padrao[q]){
             k = prefixo[k];
         }
@@ -53,31 +54,36 @@ int *funcaoPrefixo(char *padrao){
 
 
 
-int  kmp(char *dnaAminal, char *dnaVirus){
+int  *kmp(char *dnaAnimal, char *dnaVirus){
     int q = -1, m, n; //q-> indice no vetor de prefixo, m -> tamanho do dna do virus, n -> tamanho do dna do animal
-    int *prefixo;
+    int *prefixo, *respostas;
     int qntdIndices = 0; //indice correspondente das respostas na linha analisada
+    respostas = alocaVetor(2);
+    iniciaVetor(respostas, 2);
     
-    
+
     prefixo = funcaoPrefixo(dnaVirus);
-    m = strlen(dnaVirus);
-    n = strlen(dnaAminal);
+    m = strlen(dnaVirus) - 2;//TIRA O /N E INICIA EM 0, "AAAG" -> 4 POSIÇÕES, COM O /N 5 POSIÇÕES, POR ISSO, -2
+    n = strlen(dnaAnimal);
     for(int i = 0; i < n; i++){
-        while(q > -1 && dnaVirus[q+1] != dnaAminal[i]){
+        while(q > -1 && dnaVirus[q+1] != dnaAnimal[i]){
             q = prefixo[q];
         }
-        if(dnaVirus[q+1] == dnaAminal[i]){
+        if(dnaVirus[q+1] == dnaAnimal[i]){
             q++;
         }
+        
         if(q == m){
             
-            printf("Esta localizado em %d\n", i-m);
+            // printf("Esta localizado em %d\n", i - m);
+            respostas[0]++;
+            respostas[1] = i-m;
             q = prefixo[q];
             qntdIndices++;
         }
 
     }
-    return qntdIndices;
+    return respostas;
 }
 
 

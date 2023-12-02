@@ -9,7 +9,7 @@ void iniciaVetor(int *vetor, int tamanho);
 int *alocaVetor(int tamanho);
 
 int *funcaoPrefixo(char *padrao);
-int  kmp(char *dnaAminal, char *dnaVirus);
+int  *kmp(char *dnaAminal, char *dnaVirus);
 
 
 
