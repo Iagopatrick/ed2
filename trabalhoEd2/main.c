@@ -4,52 +4,55 @@
 #include <stdlib.h>
 #include <string.h>
 #include "kmp.h"
-
+#include "lista.h"
 
 
 
 int main(){
-    FILE *padroes, *baseDados;
+    FILE *padroesVirus, *baseDadosDna;
     // Abertura de arquivos
-    padroes = fopen("PadroesVirus.txt", "r");
-    if(padroes == NULL){
+    padroesVirus = fopen("PadroesVirus.txt", "r");
+    if(padroesVirus == NULL){
         printf("Erro, arquivo PadroesVirus nao pode ser aberto!");
         system("pause");
         exit(1);
     }
-    baseDados = fopen("BaseDadosDNA.txt", "r");
-    if(baseDados == NULL){
+    baseDadosDna = fopen("BaseDadosDNA.txt", "r");
+    if(baseDadosDna == NULL){
         printf("Erro, arquivo BaseDadosDNA nao pode ser aberto!");
         system("pause");
         exit(1);
     }
     //Lógica de percorrer o arquivo de padroes
-    char padrao[71];
-    int linhaVariante = 1;
-    char linha[71];
-    // char padrao[8] = "ABCDABCA";
+    char dnaVirus[71];
+    int linhaVariante = 1; //flag para saber que estou na linha do nome do vírus
+    char dnaAnimal[71];
+    char nomeAnimal[71];
+    int linhaNomeAnimal = 1;
+    char *padraoAnimal;
+    // size_t tamanhoVetor = 0;
+    // Lista *l = criaLista();
 
-    
-    do{
-        fgets(padrao, 70, padroes);
+    // do{
+    //     fgets(dnaVirus, 71, padroesVirus);
         
-        if(linhaVariante == 1){ //Essa linha refere-se a uma variante
-            fgets(linha, 70, baseDados);
-            fgets(linha, 70, baseDados);
-            fgets(padrao, 70, padroes);
-            // padrao = "ABCDABCA";
-            
-            printf("%s", padrao);
-            printf("%s", linha);
-            
-            kmp(linha, padrao);
-        }
-
-
-        // Mostrar o resultado da variante atual
-
-        break;
-    }while(padrao[1] != 'E');
+    //     if(linhaVariante == 1){ //Essa linha refere-se a uma variante
+    //         linhaVariante *= -1;
+    //         printf("%s", dnaVirus+1);
+    //         continue;
+    //     }
+    //     // fgets(dnaAnimal, 71, baseDadosDna);
+    //     // fgets(dnaAnimal, 71, baseDadosDna);
+    //     // printf("%s\n", dnaAnimal);
+    //     // printf("%s\n", dnaVirus);
+    //     int r = kmp("ABCDABCC", "ABCC");
+        
+        
+    //     break;
+        
+    // }while(dnaVirus[1] != 'E');
+    printf("AWD");
+    int r = kmp("ABCDABCC", "ABCC");
 
     
 

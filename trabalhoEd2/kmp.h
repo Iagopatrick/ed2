@@ -4,10 +4,13 @@
 #define KMP_H
 
 
-void realocaVetor(int *vetor, int tamanho);
+int  *realocaVetor(int *vetor, int tamanho);
 void iniciaVetor(int *vetor, int tamanho);
+int *alocaVetor(int tamanho);
 
-int *kmp(char *string, char *padrao);
+int *funcaoPrefixo(char *padrao);
+int  kmp(char *dnaAminal, char *dnaVirus);
+
 
 
 

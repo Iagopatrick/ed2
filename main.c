@@ -1,41 +1,16 @@
 // Grupo 15, Iago Patrick de Melo Gripp Vilas Boas e Victor Henrique Rodrigues
-#include "kmp.h"
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-void iniciaVetor(int *vetor, int tamanho){
-    for(int i = 0; i < tamanho; i++){
-        vetor[i] = 0;
-    }
-}
 
-int *realocaVetor(int *vetor, int tamanho){
-    //Tamanho é o novo tamanho a ser realocado
-    int *temp = (int *) realloc(vetor, tamanho * sizeof(int));
-    if(temp == NULL){
-        perror("Erro ao tentar realocar o vetor.");
-        exit(1);
-    }
-
-   
-    return temp;
-}
-
-int *alocaVetor(int tamanho){
-    int *vetor = (int *) malloc(tamanho*sizeof(int));
-    if(vetor == NULL){
-        perror("Vetor nao alocado corretamente!");
-        exit(1);
-    }
-    return vetor;
-}
 
 
 int *funcaoPrefixo(char *padrao){
     int tamanhoPadrao = strlen(padrao);
     int *prefixo, k = -1;
-    prefixo = alocaVetor(tamanhoPadrao);
+    prefixo = (int *) malloc(sizeof(int)*tamanhoPadrao);
     prefixo[0] = -1;
 
     for(int q = 0; q < tamanhoPadrao; q++){
@@ -46,6 +21,7 @@ int *funcaoPrefixo(char *padrao){
             k++;
         }
         prefixo[q] = k;
+        printf("%d ", prefixo[q]);
     }
 
     return prefixo;
@@ -53,7 +29,7 @@ int *funcaoPrefixo(char *padrao){
 
 
 
-int  kmp(char *dnaAminal, char *dnaVirus){
+int  kmp(char dnaAminal[71], char dnaVirus[4]){
     int q = -1, m, n; //q-> indice no vetor de prefixo, m -> tamanho do dna do virus, n -> tamanho do dna do animal
     int *prefixo;
     int qntdIndices = 0; //indice correspondente das respostas na linha analisada
@@ -81,6 +57,13 @@ int  kmp(char *dnaAminal, char *dnaVirus){
 }
 
 
+
+int main(){
+    int r;
+
+    r = kmp("GGTACCTCCTACGGGAGGCAGCAGTGAGGAATTTTCCGCAATGGGCGAAAGCCTGACGGAGCAATACCGC", "AGGA");
+    return 0;
+}
 
 
 /* Antoações: é preciso saber como vou printar as informações vou passar um vetor de respostas para a main? Vou passar o padrão de saida para o kmp?

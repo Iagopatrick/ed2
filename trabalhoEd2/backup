@@ -1,0 +1,39 @@
+do{//percorrendo o arquivo de animais
+            fgets(dnaAnimal, 71, baseDadosDna);
+            if(linhaNomeAnimal == 1){//salva o nome do animal e pega a primeira linha do dna do animal, colocando essa linha no padrao animal
+                strcpy(nomeAnimal, dnaAnimal+1);
+                linhaNomeAnimal *= -1;
+                printf("\nnome animal:%s\n", nomeAnimal);    
+                continue;
+            }
+            
+            
+            int indiceArquivo = 0;
+            
+            insereNo(0, l);
+            
+            // printf("Sai daqui");
+            // do
+            // {
+                int tmp;
+                char copiaAnimal[sizeof(dnaAnimal)], copiaVirus[sizeof(dnaVirus)];
+                strcpy(copiaAnimal, dnaAnimal);
+                strcpy(copiaVirus, dnaVirus);
+
+                tmp = kmp(copiaAnimal, copiaVirus);
+            //     l->inicio->chave += tmp[0];
+            //     printf("%d\t", l->inicio->chave);
+            //     for(int i = 1; i < sizeof(kmp); i++){
+            //         insereNo(tmp[i]+indiceArquivo, l);
+            //     }
+            //     indiceArquivo += sizeof(dnaAnimal);
+            //     fgets(dnaAnimal, 71, baseDadosDna);
+                
+            // } while (dnaAnimal[0] != '>');
+            printf("%d\n", tmp);
+            printf("%s\n", nomeAnimal);
+            // printf("no. ocorrencias %d\n", l->inicio->chave);
+
+            
+            break;
+        }while(dnaAnimal[1] != 'E');
