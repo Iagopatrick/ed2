@@ -3,6 +3,7 @@
 #ifndef KMP_H
 #define KMP_H
 
+char *concatenaString(char *str1, char *str2);
 
 int  *realocaVetor(int *vetor, int tamanho);
 void iniciaVetor(int *vetor, int tamanho);

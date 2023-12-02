@@ -4,6 +4,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+char *concatenaString(char *str1, char *str2){
+    char *resposta = (char *)malloc(strlen(str1)+strlen(str2)+1);
+    if(resposta == NULL){
+        perror("Erro ao alocar vetor de char resposta!");
+        exit(1);
+    }
+
+    strcpy(resposta, str1);
+    // char *ultimoCaractere = strchr(resposta, '\n');
+    // if (ultimoCaractere != NULL) {
+    //     *ultimoCaractere = '\0';
+    // }
+
+    strcat(resposta, str2);
+    
+    return resposta;
+}
+
+
 void iniciaVetor(int *vetor, int tamanho){
     for(int i = 0; i < tamanho; i++){
         vetor[i] = 0;

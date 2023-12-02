@@ -37,3 +37,36 @@ do{//percorrendo o arquivo de animais
             
             break;
         }while(dnaAnimal[1] != 'E');
+
+
+
+        // backup 2
+        padraoAnimal = concatenaString(str1, dnaAnimal);
+                
+                
+                
+                printf("Concatenado: %s\n\n", padraoAnimal);
+                str1 = realloc(str1, sizeof(padroesVirus) * sizeof(char));
+                strcpy(str1, padraoAnimal);
+                fgets(dnaAnimal, 71, baseDadosDna);
+
+
+                // bckp´3
+                do{
+                int *tmp;
+                tmp = kmp(dnaAnimal, dnaVirus);
+                l->inicio->chave += tmp[0];
+                insereNo(tmp[1], l);
+
+                fgets(dnaAnimal, 71, baseDadosDna);
+            } while (dnaAnimal[0] != '>');
+            
+            
+            printf("%s\n", nomeAnimal);
+            printf("no. ocorrencias %d\n", l->inicio->chave);
+            No *aux = l->inicio->prox;
+            
+            while(aux != NULL){
+                printf("Indice: %d\n", aux->chave);
+                aux = aux->prox;
+            }
