@@ -1,47 +1,9 @@
-// Grupo 15, Iago Patrick de Melo Gripp Vilas Boas e Victor Henrique Rodrigues
+// Grupo 13, Iago Patrick de Melo Gripp Vilas Boas e Victor Henrique Rodrigues
 #include "kmp.h"
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-char *concatenaString(char *str1, char *str2){
-    char *resposta = (char *)malloc(strlen(str1)+strlen(str2)+1);
-    if(resposta == NULL){
-        perror("Erro ao alocar vetor de char resposta!");
-        exit(1);
-    }
-
-    strcpy(resposta, str1);
-    // char *ultimoCaractere = strchr(resposta, '\n');
-    // if (ultimoCaractere != NULL) {
-    //     *ultimoCaractere = '\0';
-    // }
-
-    strcat(resposta, str2);
-    
-    return resposta;
-}
-
-
-void iniciaVetor(int *vetor, int tamanho){
-    for(int i = 0; i < tamanho; i++){
-        vetor[i] = 0;
-    }
-}
-
-int *realocaVetor(int *vetor, int tamanho){
-    //Tamanho é o novo tamanho a ser realocado
-    int *temp = (int *) realloc(vetor, tamanho * sizeof(int));
-    if(temp == NULL){
-        perror("Erro ao tentar realocar o vetor.");
-        exit(1);
-    }
-
-   
-    return temp;
-}
 
 int *alocaVetor(int tamanho){
+    // Aloca um vetor com tamanho na memória
     int *vetor = (int *) malloc(tamanho*sizeof(int));
     if(vetor == NULL){
         perror("Vetor nao alocado corretamente!");
@@ -50,64 +12,69 @@ int *alocaVetor(int tamanho){
     return vetor;
 }
 
-
+// Função responsável por criar o vetor de prefixos
 int *funcaoPrefixo(char *padrao){
-    int tamanhoPadrao = strlen(padrao);
-    int *prefixo, k = -1;
-    // prefixo = alocaVetor(tamanhoPadrao);
+    int tamanhoPadrao = strlen(padrao) - 1; //-1 por conta do \n contido na string
+    int *prefixo, k = -1;//Ponteiro de vetor prefixo e o k é o indice que percorre o prefixo dentro do vetor de padrao, começa em -1 pois não existe prefixo no inicio
+    
+    // Alocação do vetor prefixo
     prefixo = alocaVetor(tamanhoPadrao);
-    prefixo[0] = -1;
-
-    for(int q = 1; q < tamanhoPadrao; q++){
+    prefixo[0] = -1; //Primeira posição sempre começa com -1
+    // Percorrendo o padrão, a partir da segunda posição
+    for(int q = 1; q < tamanhoPadrao; q++){ 
+        // Caso o k+1 seja diferente do q, o prefixo termina e k volta as posições contidas no padrao
         while(k > -1 && padrao[k+1] != padrao[q]){
             k = prefixo[k];
         }
+        // Caso a posição do padrão seja igual ao prefixo, aumenta o tamanho do prefixo
         if(padrao[k+1] == padrao[q]){
             k++;
         }
+        // Prefixo na posição do padrão recebe o valor do indice k
         prefixo[q] = k;
     }
-
+    
     return prefixo;
 }
 
 
 
-int  *kmp(char *dnaAnimal, char *dnaVirus){
-    int q = -1, m, n; //q-> indice no vetor de prefixo, m -> tamanho do dna do virus, n -> tamanho do dna do animal
-    int *prefixo, *respostas;
-    int qntdIndices = 0; //indice correspondente das respostas na linha analisada
-    respostas = alocaVetor(2);
-    iniciaVetor(respostas, 2);
-    
-
+void kmp(char *dnaAnimal, char *dnaVirus, Lista *l, int indiceArquivo){
+    //q-> indice no vetor de prefixo, m -> tamanho do dna do virus, n -> tamanho do dna do animal
+    int q = -1, m, n; 
+    //Ponteiro para o vetor de prefixo
+    int *prefixo;
+   
     prefixo = funcaoPrefixo(dnaVirus);
-    m = strlen(dnaVirus) - 2;//TIRA O /N E INICIA EM 0, "AAAG" -> 4 POSIÇÕES, COM O /N 5 POSIÇÕES, POR ISSO, -2
+
+    //-1 para retirar o \n e -1 para m conseguir ter o valor dos indices do vetor de prefixo
+    m = strlen(dnaVirus) - 2; 
+
+    //Não precisa do -1 pois no loop a ultima posição não é acessada, que seria a posição do \n
     n = strlen(dnaAnimal);
+    
+    //Loop para percorre a string a ser comparada
     for(int i = 0; i < n; i++){
+        // Caso o vetor do padrão tenha uma diferença na string a sser comparada, q volta para a posição do possível prefixo
         while(q > -1 && dnaVirus[q+1] != dnaAnimal[i]){
             q = prefixo[q];
         }
+        // Caso seja iguais, o indice no vetor de padrao avança
         if(dnaVirus[q+1] == dnaAnimal[i]){
             q++;
         }
-        
+        // Caso que o vetor de padrao foi todo encontrado na string analisada
         if(q == m){
+            // O contador é acrescido de +1
+            l->inicio->chave++;
+            // O indice que ocorreu é inserido na lista + o valor do indice correspondente da linha
+            insereNo((i-m) + indiceArquivo, l);
+            // Reinicia o indice no vetor do padrao
+            q = -1;
             
-            // printf("Esta localizado em %d\n", i - m);
-            respostas[0]++;
-            respostas[1] = i-m;
-            q = prefixo[q];
-            qntdIndices++;
         }
 
     }
-    return respostas;
+    //terminada a função, o vetor prefixo pode liberar os recursos
+    free(prefixo);
 }
-
-
-
-
-/* Antoações: é preciso saber como vou printar as informações vou passar um vetor de respostas para a main? Vou passar o padrão de saida para o kmp?
-
-*/

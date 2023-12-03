@@ -1,8 +1,9 @@
-// Grupo 15, Iago Patrick de Melo Gripp Vilas Boas e Victor Henrique Rodrigues
+// Grupo 13, Iago Patrick de Melo Gripp Vilas Boas e Victor Henrique Rodrigues
 
 #include "no.h"
 #include "lista.h"
 
+// Função que cria uma lista e aloca ela na memória
 Lista *criaLista(){
    
     Lista *novaLista;
@@ -16,7 +17,7 @@ Lista *criaLista(){
     return novaLista;
 }
 
-
+// Função que cria um no e insere ele na lista
 void insereNo(int chave, Lista *l){
     No *aux = criaNo(chave);
     if(l->fim == NULL){
