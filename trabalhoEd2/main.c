@@ -3,6 +3,15 @@
 
 int main(){
     FILE *padroesVirus, *baseDadosDna;
+    
+    
+    char dnaVirus[71]; //Variavel que vai receber cada linha do arquivo do virus
+    char nomeAnimal[71]; //Variavel que recebe o nome do animal
+    char dnaAnimal[71]; //Variavel para receber cada linha do arquivo dos animais
+    int linhaVariante = 1; //flag para saber que estou na linha do nome do vírus, pode ser 1 ou -1
+    int linhaNomeAnimal = 1;//flag para saber que estou na linha do nome do animal, pode ser 1 ou -1
+    Lista *l = criaLista(); //Inicia minha lista que conterá os indices de cada ocorrencia. O primeiro nó guarda a quantidade de ocorrencias
+
     // Abertura do arquivo PadroesVirus.txt, apenas para leitura, o arquivo deve existir para funcionar.
     padroesVirus = fopen("PadroesVirus.txt", "r");
     if(padroesVirus == NULL){
@@ -11,19 +20,10 @@ int main(){
         exit(1);
     }
     
-    //Lógica de percorrer o arquivo de padroes
-    char dnaVirus[71]; //Variavel que vai receber cada linha do arquivo do virus
-    int linhaVariante = 1; //flag para saber que estou na linha do nome do vírus, pode ser 1 ou -1
-    char dnaAnimal[71]; //Variavel para receber cada linha do arquivo dos animais
-    char nomeAnimal[71]; //Variavel que recebe o nome do animal
-    int linhaNomeAnimal = 1;//flag para saber que estou na linha do nome do animal, pode ser 1 ou -1
-    Lista *l = criaLista(); //Inicia minha lista que conterá os indices de cada ocorrencia. O primeiro nó guarda a quantidade de ocorrencias
-
-    
 
     
     //loop para percorrer o arquivo de virus
-    while(dnaVirus[1] != 'E'){ 
+    while(strcmp(dnaVirus, ">EOF") != 0){ 
         fgets(dnaVirus, 71, padroesVirus);
         /* 
         Como é preciso parar quando o arquivo termina com '>EOF', na posição 1 é preciso ter a letra E. Isso funciona pois o padrão do virus
@@ -41,7 +41,7 @@ int main(){
         
 
         
-        baseDadosDna = fopen("BaseDadosDNA.txt", "r"); //Abertura do arquivo "BaseDadosDNA.txt" apenas para leitura, o arquivo deve existir para funcionar
+        baseDadosDna = fopen("BaseDadosDNA.txt", "r"); //Abertura do arquivo "BaseDadosDNA.txt" apenas para leitura, o arquivo deve existir para funcionar. baseDadosDna é o ponteiro do arquivo
         if(baseDadosDna == NULL){
             printf("Erro, arquivo BaseDadosDNA nao pode ser aberto!");
             system("pause");
@@ -57,6 +57,7 @@ int main(){
                 continue;
             }
             
+            l = criaLista();
             int indiceArquivo = 0; //Variavel para saber qual o número do indíce atual, já que a comparação é feita linha por linha
             insereNo(0, l);//Insere o primeiro nó na lista, sendo este responsavel por ser a variavel contadora
             
@@ -86,7 +87,6 @@ int main(){
                 printf("\n"); //Para formatação correta na saida
             }
             free(l); //Após utilizar a lista, é preciso liberar a memória usada
-            l = criaLista();
             
             strcpy(nomeAnimal, dnaAnimal + 1); //Como o padrão de saída é o inicio do nome do animal, é preciso salvar isso na variavel de nome
             nomeAnimal[strcspn(nomeAnimal, "\n")] = '\0';//Retirando o \n do final da string lida

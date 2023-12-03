@@ -33,7 +33,7 @@ int *funcaoPrefixo(char *padrao){
         // Prefixo na posição do padrão recebe o valor do indice k
         prefixo[q] = k;
     }
-    
+
     return prefixo;
 }
 
@@ -69,7 +69,6 @@ void kmp(char *dnaAnimal, char *dnaVirus, Lista *l, int indiceArquivo){
             l->inicio->chave++;
             // O indice que ocorreu é inserido na lista + o valor do indice correspondente da linha
             insereNo((i-m) + indiceArquivo, l);
-            // Reinicia o indice no vetor do padrao
             q = -1;
             
         }
