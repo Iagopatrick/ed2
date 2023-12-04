@@ -10,7 +10,7 @@ int main(){
     char dnaAnimal[71]; //Variavel para receber cada linha do arquivo dos animais
     int linhaVariante = 1; //flag para saber que estou na linha do nome do vírus, pode ser 1 ou -1
     int linhaNomeAnimal = 1;//flag para saber que estou na linha do nome do animal, pode ser 1 ou -1
-    Lista *l = criaLista(); //Inicia minha lista que conterá os indices de cada ocorrencia. O primeiro nó guarda a quantidade de ocorrencias
+    Lista *l; //Inicia minha lista que conterá os indices de cada ocorrencia. O primeiro nó guarda a quantidade de ocorrencias
 
     // Abertura do arquivo PadroesVirus.txt, apenas para leitura, o arquivo deve existir para funcionar.
     padroesVirus = fopen("PadroesVirus.txt", "r");
@@ -25,13 +25,6 @@ int main(){
     //loop para percorrer o arquivo de virus
     while(strcmp(dnaVirus, ">EOF") != 0){ 
         fgets(dnaVirus, 71, padroesVirus);
-        /* 
-        Como é preciso parar quando o arquivo termina com '>EOF', na posição 1 é preciso ter a letra E. Isso funciona pois o padrão do virus
-        sempre começa com a palavra 'variante', então na posição 1 sempre terá a letra 'v'
-        */ 
-        if(dnaVirus[1] == 'E'){
-            break;
-        }
         if(dnaVirus[0] == '\n') continue;
         if(linhaVariante == 1){ //Essa linha refere-se ao nome de uma variante do vírus
             linhaVariante *= -1;
